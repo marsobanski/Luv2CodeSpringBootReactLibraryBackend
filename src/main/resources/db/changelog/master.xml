@@ -1,0 +1,11 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <include file="classpath:db/changelog/add-tables.xml" relativeToChangelogFile="false" />
+    <include file="classpath:db/changelog/add-books-1.xml" relativeToChangelogFile="false" />
+    <include file="classpath:db/changelog/add-books-2.xml" relativeToChangelogFile="false" />
+    <include file="classpath:db/changelog/add-books-3.xml" relativeToChangelogFile="false" />
+    <include file="classpath:db/changelog/add-books-4.xml" relativeToChangelogFile="false" />
+    <include file="classpath:db/changelog/add-books-5.xml" relativeToChangelogFile="false" />
+
+</databaseChangeLog>

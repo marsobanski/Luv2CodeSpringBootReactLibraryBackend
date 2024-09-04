@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://localhost:3306/luv2code-library
+    username: marcin
+    password: marcin
+  liquibase:
+    change-log: classpath:db/changelog/master.xml
+  data:
+    rest:
+      base-path: /api
+springdoc:
+  swagger-ui:
+    path: /swagger.html
