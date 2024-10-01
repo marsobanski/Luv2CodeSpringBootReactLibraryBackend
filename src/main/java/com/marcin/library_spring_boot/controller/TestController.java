@@ -31,8 +31,4 @@ public class TestController {
         books.forEach(book -> book.setImg(""));
         return new PageImpl<>(books, pageable, books.size());
     }
-
-    /**
-     * pageSize = 5 -> 0: 0-4, 1: 5-9, 2: 10-14 -> min = pageSize * pageNum, max = (pageSize * pageNum + 1) -1
-     * pageSize = 7 -> 0: 0-6, 1: 7-13, 2: 14-20 ->  */
 }
