@@ -1,6 +1,7 @@
 package com.marcin.library_spring_boot.config;
 
 import com.marcin.library_spring_boot.entity.Book;
+import com.marcin.library_spring_boot.entity.Review;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurer;
@@ -22,6 +23,9 @@ public class MyDataRestConfig implements RepositoryRestConfigurer {
 
         config.exposeIdsFor(Book.class);
         disableHttpMethods(Book.class, config, unsupportedActions);
+        config.exposeIdsFor(Review.class);
+        disableHttpMethods(Review.class, config, unsupportedActions);
+
 
         /* Configure CORS mapping */
         /* zezwala na komunikację dowolny endpoint ale tylko z http://localhost:3000*/

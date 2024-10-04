@@ -4,6 +4,8 @@ package com.marcin.library_spring_boot.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+//INFO: Spring Data automatycznie ukrywa id encji, więc trzeba dodać widoczność
+//      w MyDataRestConfig w config.exposeIdsFor oraz ustawić widoczność metod HTTP
 @Entity
 @Table(name = "book")
 @Data
