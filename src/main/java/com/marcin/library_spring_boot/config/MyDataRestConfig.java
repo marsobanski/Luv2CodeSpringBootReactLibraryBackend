@@ -1,6 +1,7 @@
 package com.marcin.library_spring_boot.config;
 
 import com.marcin.library_spring_boot.entity.Book;
+import com.marcin.library_spring_boot.entity.Checkout;
 import com.marcin.library_spring_boot.entity.Review;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
@@ -25,6 +26,8 @@ public class MyDataRestConfig implements RepositoryRestConfigurer {
         disableHttpMethods(Book.class, config, unsupportedActions);
         config.exposeIdsFor(Review.class);
         disableHttpMethods(Review.class, config, unsupportedActions);
+        config.exposeIdsFor(Checkout.class);
+        disableHttpMethods(Checkout.class, config, unsupportedActions);
 
 
         /* Configure CORS mapping */
