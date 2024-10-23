@@ -18,7 +18,7 @@ public class BookService {
 
     private final BookRepository bookRepository;
     private final CheckoutRepository checkoutRepository;
-    private final Long DAYS_TO_RETURN_FROM_CHECKOUT_DATE = 7
+    private final long DAYS_TO_RETURN_FROM_CHECKOUT_DATE = 7;
 
     public Book checkoutBook (String userEmail, Long bookId) throws Exception {
         Optional<Book> bookOpt = bookRepository.findById(bookId);
@@ -44,5 +44,14 @@ public class BookService {
             throw new IllegalStateException("Book not found");
         });
         return bookOpt.orElseThrow(() -> new Exception("Error on creating a book"));
+    }
+
+    public boolean bookIsCheckedOutByUser(String userEmail, Long bookId) {
+        Checkout existingCheckout = checkoutRepository.findByUserEmailAndBookId(userEmail, bookId);
+        return existingCheckout != null;
+    }
+
+    public int currentLoansCount(String userEmail) {
+        return checkoutRepository.findBooksByUserEmail(userEmail).size();
     }
 }

@@ -1,3 +1,5 @@
 1) Spring Data REST:
     a) Aby używać Spring Data REST (automatyczne endpointy) należy stworzyć encję (Book) oraz repository (BoksRepository)
     b) wybrane endpointy należy utowrzyć konfigurację (MyDataRestConfig) (chociaż w połowie nie wiem co tam się dzieje)
+
+2) Poczytać o security: JWT, CORS, CSRF

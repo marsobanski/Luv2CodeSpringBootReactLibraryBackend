@@ -9,6 +9,7 @@ spring:
   data:
     rest:
       base-path: /api
-springdoc:
-  swagger-ui:
-    path: /swagger.html
+okta:
+  oauth2:
+    client-id: 0oakbvlikiEE3X6SO5d7
+    issuer: https://dev-26581089.okta.com/oauth2/default
