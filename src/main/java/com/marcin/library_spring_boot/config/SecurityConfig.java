@@ -15,8 +15,6 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 @Configuration
 public class SecurityConfig {
 
-    private static final String[] SWAGGER_WHITE_LIST_URL = {"/api/v1/auth/**", "/v2/api-docs", "/v3/api-docs", "/v3/api-docs/**", "/swagger-resources", "/swagger-resources/**", "/configuration/ui", "/configuration/security", "/swagger-ui/**", "/webjars/**", "/swagger-ui.html"};
-
     //INFO: Ogólnie poczytać o tym wszystkim na stronie Spring Security https://docs.spring.io/spring-security
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -28,13 +26,9 @@ public class SecurityConfig {
         //Protect endpoints on /secure
         http.authorizeHttpRequests(configurer ->
                 configurer
-                        .requestMatchers("/api/books/secure/**")
-                        .authenticated())
+                        .requestMatchers("/api/books/secure/**").authenticated()
+                        .anyRequest().permitAll())
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()));
-
-        //Swagger
-        http.authorizeHttpRequests(
-                auth -> auth.requestMatchers(SWAGGER_WHITE_LIST_URL).permitAll().anyRequest().authenticated());
 
         http.sessionManagement(session -> session.sessionCreationPolicy(STATELESS));
 

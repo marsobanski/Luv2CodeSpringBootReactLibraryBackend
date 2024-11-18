@@ -42,9 +42,9 @@ public class MyDataRestConfig implements RepositoryRestConfigurer {
                                     HttpMethod[] unsupportedActions) {
         config.getExposureConfiguration()
                 .forDomainType(clz)
-                .withItemExposure((_, httpMethods)
+                .withItemExposure((item, httpMethods)
                         -> httpMethods.disable(unsupportedActions))
-                .withCollectionExposure((_, httpMethods)
+                .withCollectionExposure((item, httpMethods)
                         -> httpMethods.disable(unsupportedActions));
     }
 }
