@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 // INFO: frontend na React będzie miał dostęp do tego kontrolera bez problemów w CORS policy
-@CrossOrigin("http://localhost:3000")
+//@CrossOrigin(origins = {"${frontend.host}"})
 @RequestMapping("/api/books")
 @RequiredArgsConstructor
 public class BookController {
