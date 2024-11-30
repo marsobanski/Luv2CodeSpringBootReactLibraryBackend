@@ -16,7 +16,7 @@ public class ReviewService {
     private final ReviewRepository reviewRepository;
 
     public void postReview(String email, ReviewRequest reviewRequest) throws Exception {
-        if (reviewExists(email, reviewRequest.getBookId())) {
+        if (bookReviewedByUser(email, reviewRequest.getBookId())) {
             throw new Exception("Review already exists");
         }
         Review review = new Review();
@@ -28,7 +28,7 @@ public class ReviewService {
         reviewRepository.save(review);
     }
 
-    public boolean reviewExists(String userEmail, Long bookId) {
+    public boolean bookReviewedByUser(String userEmail, Long bookId) {
         return reviewRepository.findByUserEmailAndBookId(userEmail, bookId) != null;
     }
 }

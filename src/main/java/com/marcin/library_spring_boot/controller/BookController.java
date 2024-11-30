@@ -5,6 +5,7 @@ import com.marcin.library_spring_boot.entity.Book;
 import com.marcin.library_spring_boot.service.BookService;
 import com.marcin.library_spring_boot.utils.ExtractJwt;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -22,21 +23,21 @@ public class BookController {
     //      (nazywa to się Bearer Token i String zaczyna się od "Bearer",
     //      a dopiero dalej jest zakodowany String tokena do odbieranego requestu (patrz ExtractJwt)
     @PutMapping("/secure/checkout")
-    public Book checkoutBook(@RequestHeader(value = "Authorization") String token,
+    public Book checkoutBook(@RequestHeader(value = HttpHeaders.AUTHORIZATION) String token,
                              @RequestParam Long bookId) throws Exception {
         String userEmail = ExtractJwt.payloadJWTExtraction(token, "\"sub\"");
         return bookService.checkoutBook(userEmail, bookId);
     }
 
     @GetMapping("/secure/ischeckedout/byuser")
-    public boolean isBookCheckedOutByUser(@RequestHeader(value = "Authorization") String token,
+    public boolean isBookCheckedOutByUser(@RequestHeader(value = HttpHeaders.AUTHORIZATION) String token,
                                           @RequestParam Long bookId) throws Exception {
         String userEmail = ExtractJwt.payloadJWTExtraction(token, "\"sub\"");
         return bookService.bookIsCheckedOutByUser(userEmail, bookId);
     }
 
     @GetMapping("/secure/currentloans/count")
-    public int getCurrentLoanCount(@RequestHeader(value = "Authorization") String token) {
+    public int getCurrentLoanCount(@RequestHeader(value = HttpHeaders.AUTHORIZATION) String token) {
         String userEmail = ExtractJwt.payloadJWTExtraction(token, "\"sub\"");
         return bookService.currentLoansCount(userEmail);
     }
