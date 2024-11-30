@@ -19,8 +19,8 @@ public class BookController {
 
     //INFO: "/secure" zosało zabezpieczone w SecurityConfig, żeby tylko po autoryzacji tokenem JWT dało się wejść
     //INFO: "@RequestHeader(value = "Authorization") String token" dodaje wymagalność tokena
-    //      (nazywa to się Bearer Token i String zaczyna się od "Bearer"
-    //      , a dopiero dalej jest zakodowany String tokena do odbieranego requestu (patrz ExtractJwt)
+    //      (nazywa to się Bearer Token i String zaczyna się od "Bearer",
+    //      a dopiero dalej jest zakodowany String tokena do odbieranego requestu (patrz ExtractJwt)
     @PutMapping("/secure/checkout")
     public Book checkoutBook(@RequestHeader(value = "Authorization") String token,
                              @RequestParam Long bookId) throws Exception {
