@@ -4,12 +4,19 @@ import com.marcin.library_spring_boot.dao.BookRepository;
 import com.marcin.library_spring_boot.dao.CheckoutRepository;
 import com.marcin.library_spring_boot.entity.Book;
 import com.marcin.library_spring_boot.entity.Checkout;
+import com.marcin.library_spring_boot.responseModels.ShelfCurrentLoansResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 @Service
 @Transactional
@@ -53,5 +60,32 @@ public class BookService {
 
     public int currentLoansCount(String userEmail) {
         return checkoutRepository.findBooksByUserEmail(userEmail).size();
+    }
+
+    public List<ShelfCurrentLoansResponse> currentLoans(String userEmail) throws Exception {
+        List<ShelfCurrentLoansResponse> shelfCurrentLoansResponses = new ArrayList<>();
+        List<Checkout> checkouts = checkoutRepository.findBooksByUserEmail(userEmail);
+        List<Long> bookIdList = checkouts.stream()
+                .map(Checkout::getBookId)
+                .toList();
+        List<Book> books = bookRepository.findAllById(bookIdList);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        for (Book book : books) {
+            checkouts.stream()
+                    .filter(checkout -> book.getId().equals(checkout.getBookId()))
+                    .findAny()
+                    .ifPresent(checkout -> {
+                        try {
+                            Date checkoutReturnDate = simpleDateFormat.parse(checkout.getReturnDate());
+                            Date now = simpleDateFormat.parse(LocalDate.now().toString());
+                            TimeUnit timeUnit = TimeUnit.DAYS;
+                            long differenceInTime = timeUnit.convert(checkoutReturnDate.getTime() - now.getTime(), TimeUnit.MILLISECONDS);
+                            shelfCurrentLoansResponses.add(new ShelfCurrentLoansResponse(book, (int) differenceInTime));
+                        } catch (ParseException e) {
+                            throw new RuntimeException(e);
+                        }
+                    });
+        }
+        return shelfCurrentLoansResponses;
     }
 }

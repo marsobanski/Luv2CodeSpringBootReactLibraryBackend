@@ -2,11 +2,14 @@ package com.marcin.library_spring_boot.controller;
 
 import com.marcin.library_spring_boot.dao.CheckoutRepository;
 import com.marcin.library_spring_boot.entity.Book;
+import com.marcin.library_spring_boot.responseModels.ShelfCurrentLoansResponse;
 import com.marcin.library_spring_boot.service.BookService;
 import com.marcin.library_spring_boot.utils.ExtractJwt;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 // INFO: frontend na React będzie miał dostęp do tego kontrolera bez problemów w CORS policy
@@ -40,5 +43,11 @@ public class BookController {
     public int getCurrentLoanCount(@RequestHeader(value = HttpHeaders.AUTHORIZATION) String token) {
         String userEmail = ExtractJwt.payloadJWTExtraction(token, "\"sub\"");
         return bookService.currentLoansCount(userEmail);
+    }
+
+    @GetMapping("/secure/currentloans")
+    public List<ShelfCurrentLoansResponse> currentLoans(@RequestHeader(value = HttpHeaders.AUTHORIZATION) String token) throws Exception {
+        String userEmail = ExtractJwt.payloadJWTExtraction(token, "\"sub\"");
+        return bookService.currentLoans(userEmail);
     }
 }
